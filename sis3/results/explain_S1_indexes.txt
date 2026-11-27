@@ -1,0 +1,114 @@
+Pager usage is off.
+=== Q1 list open tasks of a user (ORDER BY due_date LIMIT 20)
+                                             QUERY PLAN                                             
+----------------------------------------------------------------------------------------------------
+ Limit (actual time=0.040..0.160 rows=20 loops=1)
+   Buffers: shared hit=20 read=3
+   I/O Timings: shared read=0.023
+   ->  Index Scan using idx_tasks_user_open_due on tasks (actual time=0.039..0.158 rows=20 loops=1)
+         Index Cond: (user_id = 777)
+         Buffers: shared hit=20 read=3
+         I/O Timings: shared read=0.023
+ Planning:
+   Buffers: shared hit=205 dirtied=4
+ Planning Time: 0.567 ms
+ Execution Time: 0.182 ms
+(11 rows)
+
+=== Q2 overdue count
+                                               QUERY PLAN                                                
+---------------------------------------------------------------------------------------------------------
+ Aggregate (actual time=0.033..0.033 rows=1 loops=1)
+   Buffers: shared hit=5
+   ->  Index Only Scan using idx_tasks_user_open_due on tasks (actual time=0.020..0.026 rows=69 loops=1)
+         Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+         Heap Fetches: 0
+         Buffers: shared hit=5
+ Planning:
+   Buffers: shared hit=6
+ Planning Time: 0.070 ms
+ Execution Time: 0.047 ms
+(10 rows)
+
+=== Q3 tasks of a user with tag
+                                                  QUERY PLAN                                                  
+--------------------------------------------------------------------------------------------------------------
+ Limit (actual time=0.568..2.155 rows=5 loops=1)
+   Buffers: shared hit=605 read=4
+   I/O Timings: shared read=0.056
+   ->  Nested Loop (actual time=0.568..2.153 rows=5 loops=1)
+         Buffers: shared hit=605 read=4
+         I/O Timings: shared read=0.056
+         ->  Bitmap Heap Scan on tasks t (actual time=0.093..0.776 rows=151 loops=1)
+               Recheck Cond: (user_id = 777)
+               Heap Blocks: exact=151
+               Buffers: shared hit=151 read=4
+               I/O Timings: shared read=0.056
+               ->  Bitmap Index Scan on idx_tasks_user_created (actual time=0.079..0.079 rows=151 loops=1)
+                     Index Cond: (user_id = 777)
+                     Buffers: shared read=4
+                     I/O Timings: shared read=0.056
+         ->  Index Only Scan using task_tags_pkey on task_tags tt (actual time=0.009..0.009 rows=0 loops=151)
+               Index Cond: ((task_id = t.id) AND (tag_id = 7))
+               Heap Fetches: 0
+               Buffers: shared hit=454
+ Planning:
+   Buffers: shared hit=125
+ Planning Time: 0.281 ms
+ Execution Time: 2.176 ms
+(23 rows)
+
+=== Q4 30-day report
+                                                               QUERY PLAN                                                                
+-----------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate (actual time=24.421..25.633 rows=3 loops=1)
+   Group Key: status
+   Buffers: shared hit=413 read=551
+   I/O Timings: shared read=3.898
+   ->  Gather Merge (actual time=24.410..25.620 rows=9 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=413 read=551
+         I/O Timings: shared read=3.898
+         ->  Sort (actual time=18.796..18.797 rows=3 loops=3)
+               Sort Key: status
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=413 read=551
+               I/O Timings: shared read=3.898
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate (actual time=18.767..18.769 rows=3 loops=3)
+                     Group Key: status
+                     Batches: 1  Memory Usage: 24kB
+                     Buffers: shared hit=397 read=551
+                     I/O Timings: shared read=3.898
+                     Worker 0:  Batches: 1  Memory Usage: 24kB
+                     Worker 1:  Batches: 1  Memory Usage: 24kB
+                     ->  Parallel Index Only Scan using idx_tasks_created_status on tasks (actual time=0.048..12.937 rows=50440 loops=3)
+                           Index Cond: (created_at >= (now() - '30 days'::interval))
+                           Heap Fetches: 0
+                           Buffers: shared hit=397 read=551
+                           I/O Timings: shared read=3.898
+ Planning:
+   Buffers: shared hit=29 dirtied=1
+ Planning Time: 0.105 ms
+ Execution Time: 25.674 ms
+(32 rows)
+
+=== Q5 update by id
+BEGIN
+                                      QUERY PLAN                                      
+--------------------------------------------------------------------------------------
+ Update on tasks (actual time=0.143..0.144 rows=0 loops=1)
+   Buffers: shared hit=21 read=4 dirtied=6
+   I/O Timings: shared read=0.026
+   ->  Index Scan using tasks_pkey on tasks (actual time=0.024..0.025 rows=1 loops=1)
+         Index Cond: (id = 1234567)
+         Buffers: shared hit=7
+ Planning:
+   Buffers: shared hit=8
+ Planning Time: 0.138 ms
+ Execution Time: 0.187 ms
+(10 rows)
+
+ROLLBACK

@@ -1,0 +1,120 @@
+Pager usage is off.
+=== Q1 list open tasks of a user (ORDER BY due_date LIMIT 20)
+                                        QUERY PLAN                                         
+-------------------------------------------------------------------------------------------
+ Limit (actual time=116.731..121.528 rows=20 loops=1)
+   Buffers: shared hit=45795
+   ->  Gather Merge (actual time=116.729..121.522 rows=20 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=45795
+         ->  Sort (actual time=111.703..111.705 rows=14 loops=3)
+               Sort Key: due_date
+               Sort Method: quicksort  Memory: 27kB
+               Buffers: shared hit=45795
+               Worker 0:  Sort Method: quicksort  Memory: 26kB
+               Worker 1:  Sort Method: quicksort  Memory: 30kB
+               ->  Parallel Seq Scan on tasks (actual time=8.475..111.600 rows=24 loops=3)
+                     Filter: ((status <> 'done'::text) AND (user_id = 777))
+                     Rows Removed by Filter: 1006422
+                     Buffers: shared hit=45681
+ Planning:
+   Buffers: shared hit=125
+ Planning Time: 0.439 ms
+ Execution Time: 121.581 ms
+(20 rows)
+
+=== Q2 overdue count
+                                                QUERY PLAN                                                
+----------------------------------------------------------------------------------------------------------
+ Finalize Aggregate (actual time=116.992..119.670 rows=1 loops=1)
+   Buffers: shared hit=45681
+   ->  Gather (actual time=113.884..119.659 rows=3 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=45681
+         ->  Partial Aggregate (actual time=111.515..111.516 rows=1 loops=3)
+               Buffers: shared hit=45681
+               ->  Parallel Seq Scan on tasks (actual time=5.230..111.488 rows=23 loops=3)
+                     Filter: ((status <> 'done'::text) AND (user_id = 777) AND (due_date < CURRENT_DATE))
+                     Rows Removed by Filter: 1006422
+                     Buffers: shared hit=45681
+ Planning:
+   Buffers: shared hit=6
+ Planning Time: 0.144 ms
+ Execution Time: 119.706 ms
+(16 rows)
+
+=== Q3 tasks of a user with tag
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Limit (actual time=61.763..87.407 rows=5 loops=1)
+   Buffers: shared hit=46136
+   ->  Gather (actual time=61.760..87.401 rows=5 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=46136
+         ->  Nested Loop (actual time=36.520..79.146 rows=2 loops=3)
+               Buffers: shared hit=46136
+               ->  Parallel Seq Scan on tasks t (actual time=0.932..78.283 rows=50 loops=3)
+                     Filter: (user_id = 777)
+                     Rows Removed by Filter: 1006395
+                     Buffers: shared hit=45681
+               ->  Index Only Scan using task_tags_pkey on task_tags tt (actual time=0.015..0.015 rows=0 loops=150)
+                     Index Cond: ((task_id = t.id) AND (tag_id = 7))
+                     Heap Fetches: 0
+                     Buffers: shared hit=455
+ Planning:
+   Buffers: shared hit=130
+ Planning Time: 0.419 ms
+ Execution Time: 87.436 ms
+(20 rows)
+
+=== Q4 30-day report
+                                             QUERY PLAN                                              
+-----------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate (actual time=183.423..184.112 rows=3 loops=1)
+   Group Key: status
+   Buffers: shared hit=45697
+   ->  Gather Merge (actual time=183.409..184.099 rows=9 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=45697
+         ->  Sort (actual time=177.342..177.345 rows=3 loops=3)
+               Sort Key: status
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=45697
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate (actual time=177.317..177.319 rows=3 loops=3)
+                     Group Key: status
+                     Batches: 1  Memory Usage: 24kB
+                     Buffers: shared hit=45681
+                     Worker 0:  Batches: 1  Memory Usage: 24kB
+                     Worker 1:  Batches: 1  Memory Usage: 24kB
+                     ->  Parallel Seq Scan on tasks (actual time=80.383..167.735 rows=47446 loops=3)
+                           Filter: (created_at >= (now() - '30 days'::interval))
+                           Rows Removed by Filter: 958999
+                           Buffers: shared hit=45681
+ Planning:
+   Buffers: shared hit=24
+ Planning Time: 0.141 ms
+ Execution Time: 184.147 ms
+(27 rows)
+
+=== Q5 update by id
+BEGIN
+                                      QUERY PLAN                                      
+--------------------------------------------------------------------------------------
+ Update on tasks (actual time=0.074..0.074 rows=0 loops=1)
+   Buffers: shared hit=16 dirtied=1
+   ->  Index Scan using tasks_pkey on tasks (actual time=0.022..0.022 rows=1 loops=1)
+         Index Cond: (id = 1234567)
+         Buffers: shared hit=7
+ Planning:
+   Buffers: shared hit=8
+ Planning Time: 0.111 ms
+ Execution Time: 0.129 ms
+(9 rows)
+
+ROLLBACK

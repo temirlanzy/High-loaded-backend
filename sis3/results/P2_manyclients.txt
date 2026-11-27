@@ -1,0 +1,5 @@
+=== P2: 250 read clients + 8 write clients, 40 s (direct to replica/primary vs through PgBouncer)
+[P2_direct] read  tps=   394.0 mean=  609.99 p50=  107.89 p95= 4022.76 p99= 6401.56 ms (n=16548)
+[P2_direct] write tps=   129.2 mean=13476.69 p50=14648.62 p95=22356.83 p99= 22540.4 ms (n=5166)
+[P2_pgbouncer] read  tps=   351.8 mean=  697.67 p50=  683.93 p95= 1009.35 p99= 1173.74 ms (n=14425)
+[P2_pgbouncer] write tps=   293.0 mean=    9.46 p50=    8.44 p95=   21.47 p99=   27.83 ms (n=11719)

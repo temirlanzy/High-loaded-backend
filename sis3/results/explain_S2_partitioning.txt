@@ -1,0 +1,670 @@
+Pager usage is off.
+=== Q1 list open tasks of a user (ORDER BY due_date LIMIT 20)
+                                                              QUERY PLAN                                                               
+---------------------------------------------------------------------------------------------------------------------------------------
+ Limit (actual time=0.554..0.616 rows=20 loops=1)
+   Buffers: shared hit=43 read=50
+   I/O Timings: shared read=0.212
+   ->  Merge Append (actual time=0.552..0.613 rows=20 loops=1)
+         Sort Key: tasks.due_date
+         Buffers: shared hit=43 read=50
+         I/O Timings: shared read=0.212
+         ->  Index Scan using tasks_p2024_11_user_id_due_date_idx on tasks_p2024_11 tasks_1 (actual time=0.022..0.023 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.009
+         ->  Index Scan using tasks_p2024_12_user_id_due_date_idx on tasks_p2024_12 tasks_2 (actual time=0.019..0.025 rows=2 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=2 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_01_user_id_due_date_idx on tasks_p2025_01 tasks_3 (actual time=0.016..0.017 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_02_user_id_due_date_idx on tasks_p2025_02 tasks_4 (actual time=0.019..0.030 rows=3 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=3 read=2
+               I/O Timings: shared read=0.008
+         ->  Index Scan using tasks_p2025_03_user_id_due_date_idx on tasks_p2025_03 tasks_5 (actual time=0.020..0.029 rows=3 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=3 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_04_user_id_due_date_idx on tasks_p2025_04 tasks_6 (actual time=0.017..0.017 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_05_user_id_due_date_idx on tasks_p2025_05 tasks_7 (actual time=0.018..0.035 rows=5 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=5 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_06_user_id_due_date_idx on tasks_p2025_06 tasks_8 (actual time=0.020..0.030 rows=4 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=4 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_07_user_id_due_date_idx on tasks_p2025_07 tasks_9 (actual time=0.023..0.023 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_08_user_id_due_date_idx on tasks_p2025_08 tasks_10 (actual time=0.049..0.049 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.036
+         ->  Index Scan using tasks_p2025_09_user_id_due_date_idx on tasks_p2025_09 tasks_11 (actual time=0.021..0.021 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.008
+         ->  Index Scan using tasks_p2025_10_user_id_due_date_idx on tasks_p2025_10 tasks_12 (actual time=0.022..0.022 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.008
+         ->  Index Scan using tasks_p2025_11_user_id_due_date_idx on tasks_p2025_11 tasks_13 (actual time=0.048..0.048 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2025_12_user_id_due_date_idx on tasks_p2025_12 tasks_14 (actual time=0.022..0.022 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.008
+         ->  Index Scan using tasks_p2026_01_user_id_due_date_idx on tasks_p2026_01 tasks_15 (actual time=0.020..0.020 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.008
+         ->  Index Scan using tasks_p2026_02_user_id_due_date_idx on tasks_p2026_02 tasks_16 (actual time=0.020..0.020 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.008
+         ->  Index Scan using tasks_p2026_03_user_id_due_date_idx on tasks_p2026_03 tasks_17 (actual time=0.017..0.017 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_04_user_id_due_date_idx on tasks_p2026_04 tasks_18 (actual time=0.017..0.017 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_05_user_id_due_date_idx on tasks_p2026_05 tasks_19 (actual time=0.019..0.019 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_06_user_id_due_date_idx on tasks_p2026_06 tasks_20 (actual time=0.019..0.019 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_07_user_id_due_date_idx on tasks_p2026_07 tasks_21 (actual time=0.016..0.016 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_08_user_id_due_date_idx on tasks_p2026_08 tasks_22 (actual time=0.019..0.019 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_09_user_id_due_date_idx on tasks_p2026_09 tasks_23 (actual time=0.016..0.016 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_10_user_id_due_date_idx on tasks_p2026_10 tasks_24 (actual time=0.017..0.017 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_11_user_id_due_date_idx on tasks_p2026_11 tasks_25 (actual time=0.019..0.019 rows=1 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=1 read=2
+               I/O Timings: shared read=0.007
+         ->  Index Scan using tasks_p2026_12_user_id_due_date_idx on tasks_p2026_12 tasks_26 (actual time=0.005..0.005 rows=0 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=2
+         ->  Index Scan using tasks_p2027_01_user_id_due_date_idx on tasks_p2027_01 tasks_27 (actual time=0.004..0.004 rows=0 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=2
+         ->  Index Scan using tasks_pdefault_user_id_due_date_idx on tasks_pdefault tasks_28 (actual time=0.004..0.004 rows=0 loops=1)
+               Index Cond: (user_id = 777)
+               Buffers: shared hit=2
+ Planning:
+   Buffers: shared hit=2897 read=2 dirtied=5
+   I/O Timings: shared read=0.016
+ Planning Time: 3.940 ms
+ Execution Time: 0.753 ms
+(121 rows)
+
+=== Q2 overdue count
+                                                                 QUERY PLAN                                                                 
+--------------------------------------------------------------------------------------------------------------------------------------------
+ Aggregate (actual time=0.279..0.281 rows=1 loops=1)
+   Buffers: shared hit=75
+   ->  Append (actual time=0.020..0.275 rows=69 loops=1)
+         Buffers: shared hit=75
+         ->  Index Only Scan using tasks_p2024_11_user_id_due_date_idx on tasks_p2024_11 tasks_1 (actual time=0.019..0.020 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2024_12_user_id_due_date_idx on tasks_p2024_12 tasks_2 (actual time=0.009..0.010 rows=2 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_01_user_id_due_date_idx on tasks_p2025_01 tasks_3 (actual time=0.010..0.010 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_02_user_id_due_date_idx on tasks_p2025_02 tasks_4 (actual time=0.009..0.009 rows=3 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_03_user_id_due_date_idx on tasks_p2025_03 tasks_5 (actual time=0.009..0.010 rows=3 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_04_user_id_due_date_idx on tasks_p2025_04 tasks_6 (actual time=0.010..0.010 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_05_user_id_due_date_idx on tasks_p2025_05 tasks_7 (actual time=0.009..0.010 rows=5 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_06_user_id_due_date_idx on tasks_p2025_06 tasks_8 (actual time=0.010..0.010 rows=6 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_07_user_id_due_date_idx on tasks_p2025_07 tasks_9 (actual time=0.009..0.010 rows=3 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_08_user_id_due_date_idx on tasks_p2025_08 tasks_10 (actual time=0.008..0.008 rows=2 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_09_user_id_due_date_idx on tasks_p2025_09 tasks_11 (actual time=0.011..0.011 rows=4 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_10_user_id_due_date_idx on tasks_p2025_10 tasks_12 (actual time=0.010..0.011 rows=6 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_11_user_id_due_date_idx on tasks_p2025_11 tasks_13 (actual time=0.007..0.008 rows=3 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2025_12_user_id_due_date_idx on tasks_p2025_12 tasks_14 (actual time=0.011..0.011 rows=2 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_01_user_id_due_date_idx on tasks_p2026_01 tasks_15 (actual time=0.008..0.008 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_02_user_id_due_date_idx on tasks_p2026_02 tasks_16 (actual time=0.009..0.009 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_03_user_id_due_date_idx on tasks_p2026_03 tasks_17 (actual time=0.007..0.008 rows=7 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_04_user_id_due_date_idx on tasks_p2026_04 tasks_18 (actual time=0.011..0.012 rows=5 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_05_user_id_due_date_idx on tasks_p2026_05 tasks_19 (actual time=0.014..0.015 rows=2 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_06_user_id_due_date_idx on tasks_p2026_06 tasks_20 (actual time=0.011..0.011 rows=3 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_07_user_id_due_date_idx on tasks_p2026_07 tasks_21 (actual time=0.009..0.009 rows=3 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_08_user_id_due_date_idx on tasks_p2026_08 tasks_22 (actual time=0.014..0.014 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_09_user_id_due_date_idx on tasks_p2026_09 tasks_23 (actual time=0.008..0.008 rows=2 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_10_user_id_due_date_idx on tasks_p2026_10 tasks_24 (actual time=0.010..0.010 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Index Only Scan using tasks_p2026_11_user_id_due_date_idx on tasks_p2026_11 tasks_25 (actual time=0.011..0.011 rows=1 loops=1)
+               Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+               Heap Fetches: 0
+               Buffers: shared hit=3
+         ->  Seq Scan on tasks_p2026_12 tasks_26 (actual time=0.002..0.002 rows=0 loops=1)
+               Filter: ((status <> 'done'::text) AND (user_id = 777) AND (due_date < CURRENT_DATE))
+         ->  Seq Scan on tasks_p2027_01 tasks_27 (actual time=0.002..0.002 rows=0 loops=1)
+               Filter: ((status <> 'done'::text) AND (user_id = 777) AND (due_date < CURRENT_DATE))
+         ->  Seq Scan on tasks_pdefault tasks_28 (actual time=0.001..0.001 rows=0 loops=1)
+               Filter: ((status <> 'done'::text) AND (user_id = 777) AND (due_date < CURRENT_DATE))
+ Planning:
+   Buffers: shared hit=18
+ Planning Time: 0.507 ms
+ Execution Time: 0.370 ms
+(114 rows)
+
+=== Q3 tasks of a user with tag
+                                                                QUERY PLAN                                                                
+------------------------------------------------------------------------------------------------------------------------------------------
+ Limit (actual time=0.513..2.138 rows=5 loops=1)
+   Buffers: shared hit=604 read=74
+   I/O Timings: shared read=0.300
+   ->  Nested Loop (actual time=0.512..2.136 rows=5 loops=1)
+         Buffers: shared hit=604 read=74
+         I/O Timings: shared read=0.300
+         ->  Append (actual time=0.015..0.994 rows=151 loops=1)
+               Buffers: shared hit=150 read=74
+               I/O Timings: shared read=0.300
+               ->  Index Scan using tasks_p2024_11_user_id_created_at_idx on tasks_p2024_11 t_1 (actual time=0.014..0.015 rows=1 loops=1)
+                     Index Cond: (user_id = 777)
+                     Buffers: shared hit=1 read=2
+                     I/O Timings: shared read=0.009
+               ->  Bitmap Heap Scan on tasks_p2024_12 t_2 (actual time=0.027..0.040 rows=7 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=7
+                     Buffers: shared hit=7 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2024_12_user_id_created_at_idx (actual time=0.018..0.019 rows=7 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2025_01 t_3 (actual time=0.020..0.050 rows=9 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=9
+                     Buffers: shared hit=9 read=3
+                     I/O Timings: shared read=0.010
+                     ->  Bitmap Index Scan on tasks_p2025_01_user_id_created_at_idx (actual time=0.016..0.016 rows=9 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.010
+               ->  Bitmap Heap Scan on tasks_p2025_02 t_4 (actual time=0.020..0.030 rows=6 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=6
+                     Buffers: shared hit=6 read=3
+                     I/O Timings: shared read=0.010
+                     ->  Bitmap Index Scan on tasks_p2025_02_user_id_created_at_idx (actual time=0.017..0.017 rows=6 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.010
+               ->  Bitmap Heap Scan on tasks_p2025_03 t_5 (actual time=0.021..0.033 rows=6 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=6
+                     Buffers: shared hit=6 read=3
+                     I/O Timings: shared read=0.010
+                     ->  Bitmap Index Scan on tasks_p2025_03_user_id_created_at_idx (actual time=0.015..0.015 rows=6 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.010
+               ->  Bitmap Heap Scan on tasks_p2025_04 t_6 (actual time=0.021..0.026 rows=3 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=3
+                     Buffers: shared hit=3 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2025_04_user_id_created_at_idx (actual time=0.016..0.016 rows=3 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2025_05 t_7 (actual time=0.019..0.036 rows=8 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=8
+                     Buffers: shared hit=8 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2025_05_user_id_created_at_idx (actual time=0.017..0.017 rows=8 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2025_06 t_8 (actual time=0.022..0.045 rows=10 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=10
+                     Buffers: shared hit=10 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2025_06_user_id_created_at_idx (actual time=0.018..0.018 rows=10 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2025_07 t_9 (actual time=0.018..0.046 rows=8 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=8
+                     Buffers: shared hit=8 read=3
+                     I/O Timings: shared read=0.010
+                     ->  Bitmap Index Scan on tasks_p2025_07_user_id_created_at_idx (actual time=0.016..0.017 rows=8 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.010
+               ->  Bitmap Heap Scan on tasks_p2025_08 t_10 (actual time=0.022..0.054 rows=7 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=7
+                     Buffers: shared hit=7 read=3
+                     I/O Timings: shared read=0.012
+                     ->  Bitmap Index Scan on tasks_p2025_08_user_id_created_at_idx (actual time=0.019..0.020 rows=7 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.012
+               ->  Bitmap Heap Scan on tasks_p2025_09 t_11 (actual time=0.024..0.049 rows=8 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=8
+                     Buffers: shared hit=8 read=3
+                     I/O Timings: shared read=0.012
+                     ->  Bitmap Index Scan on tasks_p2025_09_user_id_created_at_idx (actual time=0.018..0.019 rows=8 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.012
+               ->  Bitmap Heap Scan on tasks_p2025_10 t_12 (actual time=0.024..0.049 rows=8 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=8
+                     Buffers: shared hit=8 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2025_10_user_id_created_at_idx (actual time=0.017..0.018 rows=8 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2025_11 t_13 (actual time=0.020..0.035 rows=5 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=4
+                     Buffers: shared hit=4 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2025_11_user_id_created_at_idx (actual time=0.018..0.018 rows=5 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2025_12 t_14 (actual time=0.027..0.032 rows=3 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=3
+                     Buffers: shared hit=3 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2025_12_user_id_created_at_idx (actual time=0.019..0.020 rows=3 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_01 t_15 (actual time=0.022..0.031 rows=4 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=4
+                     Buffers: shared hit=4 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_01_user_id_created_at_idx (actual time=0.016..0.016 rows=4 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_02 t_16 (actual time=0.025..0.033 rows=4 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=4
+                     Buffers: shared hit=4 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_02_user_id_created_at_idx (actual time=0.020..0.020 rows=4 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_03 t_17 (actual time=0.026..0.060 rows=9 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=9
+                     Buffers: shared hit=9 read=3
+                     I/O Timings: shared read=0.012
+                     ->  Bitmap Index Scan on tasks_p2026_03_user_id_created_at_idx (actual time=0.020..0.020 rows=9 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.012
+               ->  Bitmap Heap Scan on tasks_p2026_04 t_18 (actual time=0.022..0.034 rows=5 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=5
+                     Buffers: shared hit=5 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_04_user_id_created_at_idx (actual time=0.018..0.018 rows=5 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_05 t_19 (actual time=0.019..0.038 rows=6 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=6
+                     Buffers: shared hit=6 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_05_user_id_created_at_idx (actual time=0.017..0.017 rows=6 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_06 t_20 (actual time=0.018..0.029 rows=5 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=5
+                     Buffers: shared hit=5 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_06_user_id_created_at_idx (actual time=0.016..0.016 rows=5 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_07 t_21 (actual time=0.046..0.081 rows=10 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=10
+                     Buffers: shared hit=10 read=3
+                     I/O Timings: shared read=0.036
+                     ->  Bitmap Index Scan on tasks_p2026_07_user_id_created_at_idx (actual time=0.044..0.044 rows=10 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.036
+               ->  Bitmap Heap Scan on tasks_p2026_08 t_22 (actual time=0.019..0.031 rows=5 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=5
+                     Buffers: shared hit=5 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_08_user_id_created_at_idx (actual time=0.017..0.017 rows=5 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_09 t_23 (actual time=0.018..0.025 rows=3 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=3
+                     Buffers: shared hit=3 read=3
+                     I/O Timings: shared read=0.012
+                     ->  Bitmap Index Scan on tasks_p2026_09_user_id_created_at_idx (actual time=0.016..0.016 rows=3 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.012
+               ->  Bitmap Heap Scan on tasks_p2026_10 t_24 (actual time=0.020..0.030 rows=5 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=5
+                     Buffers: shared hit=5 read=3
+                     I/O Timings: shared read=0.011
+                     ->  Bitmap Index Scan on tasks_p2026_10_user_id_created_at_idx (actual time=0.016..0.016 rows=5 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.011
+               ->  Bitmap Heap Scan on tasks_p2026_11 t_25 (actual time=0.023..0.038 rows=6 loops=1)
+                     Recheck Cond: (user_id = 777)
+                     Heap Blocks: exact=6
+                     Buffers: shared hit=6 read=3
+                     I/O Timings: shared read=0.012
+                     ->  Bitmap Index Scan on tasks_p2026_11_user_id_created_at_idx (actual time=0.016..0.016 rows=6 loops=1)
+                           Index Cond: (user_id = 777)
+                           Buffers: shared read=3
+                           I/O Timings: shared read=0.012
+               ->  Seq Scan on tasks_p2026_12 t_26 (actual time=0.002..0.002 rows=0 loops=1)
+                     Filter: (user_id = 777)
+               ->  Seq Scan on tasks_p2027_01 t_27 (actual time=0.001..0.001 rows=0 loops=1)
+                     Filter: (user_id = 777)
+               ->  Seq Scan on tasks_pdefault t_28 (actual time=0.001..0.001 rows=0 loops=1)
+                     Filter: (user_id = 777)
+         ->  Index Only Scan using task_tags_pkey on task_tags tt (actual time=0.007..0.007 rows=0 loops=151)
+               Index Cond: ((task_id = t.id) AND (tag_id = 7))
+               Heap Fetches: 0
+               Buffers: shared hit=454
+ Planning:
+   Buffers: shared hit=135 dirtied=1
+ Planning Time: 0.701 ms
+ Execution Time: 2.266 ms
+(243 rows)
+
+=== Q4 30-day report
+                                                                                QUERY PLAN                                                                                 
+---------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate (actual time=28.455..28.646 rows=3 loops=1)
+   Group Key: tasks.status
+   Buffers: shared hit=2097 read=48
+   I/O Timings: shared read=0.153
+   ->  Gather Merge (actual time=28.448..28.639 rows=9 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=2097 read=48
+         I/O Timings: shared read=0.153
+         ->  Sort (actual time=23.214..23.217 rows=3 loops=3)
+               Sort Key: tasks.status
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=2097 read=48
+               I/O Timings: shared read=0.153
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate (actual time=23.196..23.199 rows=3 loops=3)
+                     Group Key: tasks.status
+                     Batches: 1  Memory Usage: 24kB
+                     Buffers: shared hit=2081 read=48
+                     I/O Timings: shared read=0.153
+                     Worker 0:  Batches: 1  Memory Usage: 24kB
+                     Worker 1:  Batches: 1  Memory Usage: 24kB
+                     ->  Parallel Append (actual time=0.018..14.397 rows=53440 loops=3)
+                           Buffers: shared hit=2081 read=48
+                           I/O Timings: shared read=0.153
+                           Subplans Removed: 23
+                           ->  Seq Scan on tasks_p2026_12 tasks_3 (actual time=0.003..0.004 rows=0 loops=1)
+                                 Filter: (created_at >= (now() - '30 days'::interval))
+                           ->  Seq Scan on tasks_p2027_01 tasks_4 (actual time=0.003..0.003 rows=0 loops=1)
+                                 Filter: (created_at >= (now() - '30 days'::interval))
+                           ->  Seq Scan on tasks_pdefault tasks_5 (actual time=0.002..0.002 rows=0 loops=1)
+                                 Filter: (created_at >= (now() - '30 days'::interval))
+                           ->  Parallel Index Only Scan using tasks_p2026_10_created_at_status_idx on tasks_p2026_10 tasks_1 (actual time=0.033..1.134 rows=11883 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 0
+                                 Buffers: shared hit=2 read=48
+                                 I/O Timings: shared read=0.153
+                           ->  Parallel Seq Scan on tasks_p2026_11 tasks_2 (actual time=0.007..8.240 rows=49479 loops=3)
+                                 Filter: (created_at >= (now() - '30 days'::interval))
+                                 Buffers: shared hit=2079
+ Planning:
+   Buffers: shared hit=144 read=71
+   I/O Timings: shared read=0.240
+ Planning Time: 0.916 ms
+ Execution Time: 28.685 ms
+(46 rows)
+
+=== Q5 update by id
+BEGIN
+                                                      QUERY PLAN                                                       
+-----------------------------------------------------------------------------------------------------------------------
+ Update on tasks (actual time=0.441..0.443 rows=0 loops=1)
+   Update on tasks_p2024_11 tasks_1
+   Update on tasks_p2024_12 tasks_2
+   Update on tasks_p2025_01 tasks_3
+   Update on tasks_p2025_02 tasks_4
+   Update on tasks_p2025_03 tasks_5
+   Update on tasks_p2025_04 tasks_6
+   Update on tasks_p2025_05 tasks_7
+   Update on tasks_p2025_06 tasks_8
+   Update on tasks_p2025_07 tasks_9
+   Update on tasks_p2025_08 tasks_10
+   Update on tasks_p2025_09 tasks_11
+   Update on tasks_p2025_10 tasks_12
+   Update on tasks_p2025_11 tasks_13
+   Update on tasks_p2025_12 tasks_14
+   Update on tasks_p2026_01 tasks_15
+   Update on tasks_p2026_02 tasks_16
+   Update on tasks_p2026_03 tasks_17
+   Update on tasks_p2026_04 tasks_18
+   Update on tasks_p2026_05 tasks_19
+   Update on tasks_p2026_06 tasks_20
+   Update on tasks_p2026_07 tasks_21
+   Update on tasks_p2026_08 tasks_22
+   Update on tasks_p2026_09 tasks_23
+   Update on tasks_p2026_10 tasks_24
+   Update on tasks_p2026_11 tasks_25
+   Update on tasks_p2026_12 tasks_26
+   Update on tasks_p2027_01 tasks_27
+   Update on tasks_pdefault tasks_28
+   Buffers: shared hit=108 read=2 dirtied=6
+   I/O Timings: shared read=0.006
+   ->  Append (actual time=0.173..0.323 rows=1 loops=1)
+         Buffers: shared hit=78
+         ->  Index Scan using tasks_p2024_11_pkey on tasks_p2024_11 tasks_1 (actual time=0.015..0.015 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=5
+         ->  Index Scan using tasks_p2024_12_pkey on tasks_p2024_12 tasks_2 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_01_pkey on tasks_p2025_01 tasks_3 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_02_pkey on tasks_p2025_02 tasks_4 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_03_pkey on tasks_p2025_03 tasks_5 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_04_pkey on tasks_p2025_04 tasks_6 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_05_pkey on tasks_p2025_05 tasks_7 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_06_pkey on tasks_p2025_06 tasks_8 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_07_pkey on tasks_p2025_07 tasks_9 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_08_pkey on tasks_p2025_08 tasks_10 (actual time=0.013..0.013 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_09_pkey on tasks_p2025_09 tasks_11 (actual time=0.051..0.052 rows=1 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=4
+         ->  Index Scan using tasks_p2025_10_pkey on tasks_p2025_10 tasks_12 (actual time=0.009..0.009 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_11_pkey on tasks_p2025_11 tasks_13 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2025_12_pkey on tasks_p2025_12 tasks_14 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_01_pkey on tasks_p2026_01 tasks_15 (actual time=0.008..0.008 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_02_pkey on tasks_p2026_02 tasks_16 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_03_pkey on tasks_p2026_03 tasks_17 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_04_pkey on tasks_p2026_04 tasks_18 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_05_pkey on tasks_p2026_05 tasks_19 (actual time=0.012..0.013 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_06_pkey on tasks_p2026_06 tasks_20 (actual time=0.009..0.009 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_07_pkey on tasks_p2026_07 tasks_21 (actual time=0.010..0.010 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_08_pkey on tasks_p2026_08 tasks_22 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_09_pkey on tasks_p2026_09 tasks_23 (actual time=0.010..0.010 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_10_pkey on tasks_p2026_10 tasks_24 (actual time=0.009..0.009 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_p2026_11_pkey on tasks_p2026_11 tasks_25 (actual time=0.006..0.006 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Seq Scan on tasks_p2026_12 tasks_26 (actual time=0.001..0.001 rows=0 loops=1)
+               Filter: (id = 1234567)
+         ->  Seq Scan on tasks_p2027_01 tasks_27 (actual time=0.000..0.000 rows=0 loops=1)
+               Filter: (id = 1234567)
+         ->  Seq Scan on tasks_pdefault tasks_28 (actual time=0.001..0.001 rows=0 loops=1)
+               Filter: (id = 1234567)
+ Planning:
+   Buffers: shared hit=23
+ Planning Time: 0.313 ms
+ Execution Time: 0.662 ms
+(118 rows)
+
+ROLLBACK
