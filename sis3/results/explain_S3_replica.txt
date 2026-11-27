@@ -1,0 +1,227 @@
+Pager usage is off.
+=== Q1 list open tasks of a user (ORDER BY due_date LIMIT 20)
+                                                    QUERY PLAN                                                     
+-------------------------------------------------------------------------------------------------------------------
+ Limit (actual time=0.017..0.170 rows=20 loops=1)
+   Buffers: shared hit=22
+   ->  Index Scan using tasks_h5_user_id_due_date_idx on tasks_h5 tasks (actual time=0.016..0.168 rows=20 loops=1)
+         Index Cond: (user_id = 777)
+         Buffers: shared hit=22
+ Planning:
+   Buffers: shared hit=351
+ Planning Time: 0.670 ms
+ Execution Time: 0.190 ms
+(9 rows)
+
+=== Q2 overdue count
+                                                       QUERY PLAN                                                       
+------------------------------------------------------------------------------------------------------------------------
+ Aggregate (actual time=0.057..0.057 rows=1 loops=1)
+   Buffers: shared hit=13
+   ->  Index Only Scan using tasks_h5_user_id_due_date_idx on tasks_h5 tasks (actual time=0.015..0.051 rows=69 loops=1)
+         Index Cond: ((user_id = 777) AND (due_date < CURRENT_DATE))
+         Heap Fetches: 9
+         Buffers: shared hit=13
+ Planning:
+   Buffers: shared hit=6
+ Planning Time: 0.085 ms
+ Execution Time: 0.071 ms
+(10 rows)
+
+=== Q3 tasks of a user with tag
+                                                     QUERY PLAN                                                     
+--------------------------------------------------------------------------------------------------------------------
+ Limit (actual time=0.499..1.492 rows=5 loops=1)
+   Buffers: shared hit=604
+   ->  Nested Loop (actual time=0.497..1.490 rows=5 loops=1)
+         Buffers: shared hit=604
+         ->  Bitmap Heap Scan on tasks_h5 t (actual time=0.035..0.718 rows=151 loops=1)
+               Recheck Cond: (user_id = 777)
+               Heap Blocks: exact=147
+               Buffers: shared hit=150
+               ->  Bitmap Index Scan on tasks_h5_user_id_created_at_idx (actual time=0.019..0.019 rows=151 loops=1)
+                     Index Cond: (user_id = 777)
+                     Buffers: shared hit=3
+         ->  Index Only Scan using task_tags_pkey on task_tags tt (actual time=0.005..0.005 rows=0 loops=151)
+               Index Cond: ((task_id = t.id) AND (tag_id = 7))
+               Heap Fetches: 0
+               Buffers: shared hit=454
+ Planning:
+   Buffers: shared hit=120 dirtied=2
+ Planning Time: 0.265 ms
+ Execution Time: 1.507 ms
+(19 rows)
+
+=== Q4 30-day report
+                                                                            QUERY PLAN                                                                            
+------------------------------------------------------------------------------------------------------------------------------------------------------------------
+ Finalize GroupAggregate (actual time=39.396..41.614 rows=3 loops=1)
+   Group Key: tasks.status
+   Buffers: shared hit=12177 dirtied=38
+   ->  Gather Merge (actual time=39.388..41.606 rows=9 loops=1)
+         Workers Planned: 2
+         Workers Launched: 2
+         Buffers: shared hit=12177 dirtied=38
+         ->  Sort (actual time=31.961..31.965 rows=3 loops=3)
+               Sort Key: tasks.status
+               Sort Method: quicksort  Memory: 25kB
+               Buffers: shared hit=12177 dirtied=38
+               Worker 0:  Sort Method: quicksort  Memory: 25kB
+               Worker 1:  Sort Method: quicksort  Memory: 25kB
+               ->  Partial HashAggregate (actual time=31.934..31.938 rows=3 loops=3)
+                     Group Key: tasks.status
+                     Batches: 1  Memory Usage: 24kB
+                     Buffers: shared hit=12161 dirtied=38
+                     Worker 0:  Batches: 1  Memory Usage: 24kB
+                     Worker 1:  Batches: 1  Memory Usage: 24kB
+                     ->  Parallel Append (actual time=0.050..21.901 rows=59449 loops=3)
+                           Buffers: shared hit=12161 dirtied=38
+                           ->  Parallel Index Only Scan using tasks_h2_created_at_status_idx on tasks_h2 tasks_3 (actual time=0.051..7.257 rows=11460 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2452
+                                 Buffers: shared hit=808 dirtied=1
+                           ->  Parallel Index Only Scan using tasks_h10_created_at_status_idx on tasks_h10 tasks_11 (actual time=0.058..6.966 rows=11479 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2517
+                                 Buffers: shared hit=824 dirtied=4
+                           ->  Parallel Index Only Scan using tasks_h13_created_at_status_idx on tasks_h13 tasks_14 (actual time=0.062..6.644 rows=11225 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2993
+                                 Buffers: shared hit=793 dirtied=3
+                           ->  Parallel Index Only Scan using tasks_h12_created_at_status_idx on tasks_h12 tasks_13 (actual time=0.051..2.557 rows=11519 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2285
+                                 Buffers: shared hit=809 dirtied=2
+                           ->  Parallel Index Only Scan using tasks_h8_created_at_status_idx on tasks_h8 tasks_9 (actual time=0.057..2.487 rows=11348 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2413
+                                 Buffers: shared hit=853 dirtied=5
+                           ->  Parallel Index Only Scan using tasks_h15_created_at_status_idx on tasks_h15 tasks_16 (actual time=0.036..2.924 rows=5608 loops=2)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2001
+                                 Buffers: shared hit=761
+                           ->  Parallel Index Only Scan using tasks_h9_created_at_status_idx on tasks_h9 tasks_10 (actual time=1.661..2.475 rows=5834 loops=2)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2085
+                                 Buffers: shared hit=755 dirtied=2
+                           ->  Parallel Index Only Scan using tasks_h1_created_at_status_idx on tasks_h1 tasks_2 (actual time=0.036..1.672 rows=11149 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2235
+                                 Buffers: shared hit=719
+                           ->  Parallel Index Only Scan using tasks_h14_created_at_status_idx on tasks_h14 tasks_15 (actual time=0.024..1.804 rows=10814 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2897
+                                 Buffers: shared hit=820 dirtied=1
+                           ->  Parallel Index Only Scan using tasks_h7_created_at_status_idx on tasks_h7 tasks_8 (actual time=0.039..1.792 rows=11158 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2038
+                                 Buffers: shared hit=757 dirtied=1
+                           ->  Parallel Index Only Scan using tasks_h6_created_at_status_idx on tasks_h6 tasks_7 (actual time=0.036..3.204 rows=11429 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 1924
+                                 Buffers: shared hit=762 dirtied=4
+                           ->  Parallel Index Only Scan using tasks_h5_created_at_status_idx on tasks_h5 tasks_6 (actual time=0.023..1.779 rows=10876 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 1854
+                                 Buffers: shared hit=681 dirtied=1
+                           ->  Parallel Index Only Scan using tasks_h4_created_at_status_idx on tasks_h4 tasks_5 (actual time=0.029..1.725 rows=10842 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 1878
+                                 Buffers: shared hit=659 dirtied=1
+                           ->  Parallel Index Only Scan using tasks_h11_created_at_status_idx on tasks_h11 tasks_12 (actual time=0.042..1.757 rows=10866 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2074
+                                 Buffers: shared hit=716 dirtied=9
+                           ->  Parallel Index Only Scan using tasks_h3_created_at_status_idx on tasks_h3 tasks_4 (actual time=0.038..1.865 rows=10595 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2060
+                                 Buffers: shared hit=698 dirtied=1
+                           ->  Parallel Index Only Scan using tasks_h0_created_at_status_idx on tasks_h0 tasks_1 (actual time=0.038..2.162 rows=10701 loops=1)
+                                 Index Cond: (created_at >= (now() - '30 days'::interval))
+                                 Heap Fetches: 2280
+                                 Buffers: shared hit=746 dirtied=3
+ Planning:
+   Buffers: shared hit=1253 dirtied=2
+ Planning Time: 1.602 ms
+ Execution Time: 41.762 ms
+(89 rows)
+
+=== Q5 update by id
+BEGIN
+                                                 QUERY PLAN                                                  
+-------------------------------------------------------------------------------------------------------------
+ Update on tasks (actual time=0.247..0.249 rows=0 loops=1)
+   Update on tasks_h0 tasks_1
+   Update on tasks_h1 tasks_2
+   Update on tasks_h2 tasks_3
+   Update on tasks_h3 tasks_4
+   Update on tasks_h4 tasks_5
+   Update on tasks_h5 tasks_6
+   Update on tasks_h6 tasks_7
+   Update on tasks_h7 tasks_8
+   Update on tasks_h8 tasks_9
+   Update on tasks_h9 tasks_10
+   Update on tasks_h10 tasks_11
+   Update on tasks_h11 tasks_12
+   Update on tasks_h12 tasks_13
+   Update on tasks_h13 tasks_14
+   Update on tasks_h14 tasks_15
+   Update on tasks_h15 tasks_16
+   Buffers: shared hit=61 dirtied=3
+   ->  Append (actual time=0.090..0.190 rows=1 loops=1)
+         Buffers: shared hit=54 dirtied=2
+         ->  Index Scan using tasks_h0_pkey on tasks_h0 tasks_1 (actual time=0.021..0.021 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=6
+         ->  Index Scan using tasks_h1_pkey on tasks_h1 tasks_2 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h2_pkey on tasks_h2 tasks_3 (actual time=0.010..0.010 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h3_pkey on tasks_h3 tasks_4 (actual time=0.013..0.013 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h4_pkey on tasks_h4 tasks_5 (actual time=0.009..0.009 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h5_pkey on tasks_h5 tasks_6 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h6_pkey on tasks_h6 tasks_7 (actual time=0.014..0.019 rows=1 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=6 dirtied=2
+         ->  Index Scan using tasks_h7_pkey on tasks_h7 tasks_8 (actual time=0.010..0.010 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h8_pkey on tasks_h8 tasks_9 (actual time=0.013..0.013 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h9_pkey on tasks_h9 tasks_10 (actual time=0.007..0.007 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h10_pkey on tasks_h10 tasks_11 (actual time=0.008..0.008 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h11_pkey on tasks_h11 tasks_12 (actual time=0.008..0.008 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h12_pkey on tasks_h12 tasks_13 (actual time=0.011..0.011 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h13_pkey on tasks_h13 tasks_14 (actual time=0.010..0.010 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h14_pkey on tasks_h14 tasks_15 (actual time=0.012..0.012 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+         ->  Index Scan using tasks_h15_pkey on tasks_h15 tasks_16 (actual time=0.013..0.013 rows=0 loops=1)
+               Index Cond: (id = 1234567)
+               Buffers: shared hit=3
+ Planning:
+   Buffers: shared hit=56
+ Planning Time: 0.377 ms
+ Execution Time: 0.413 ms
+(72 rows)
+
+ROLLBACK

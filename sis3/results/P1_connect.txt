@@ -1,0 +1,9 @@
+=== P1: new connection per transaction (pgbench -C), SELECT 1, 16 clients, 20 s
+--- direct (port 5432)
+latency average = 33.169 ms
+average connection time = 2.057 ms
+tps = 482.379185 (including reconnection times)
+--- pgbouncer (port 6432)
+latency average = 2.591 ms
+average connection time = 0.148 ms
+tps = 6176.300870 (including reconnection times)
